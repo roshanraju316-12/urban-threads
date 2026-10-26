@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — URBAN THREADS{% endblock %}
+{% block content %}
+<section class="detail-layout">
+  <div class="detail-image"><img src="{{ product.image_url or 'https://placehold.co/800x1000?text=URBAN+THREADS' }}" alt="{{ product.name }}"></div>
+  <div class="detail-copy">
+    <p class="eyebrow">{{ product.category }} · EVERYDAY EDIT</p>
+    <h1>{{ product.name }}</h1>
+    <p class="detail-price">₹{{ '%.0f'|format(product.price) }}</p>
+    <p class="detail-description">{{ product.description }}</p>
+    <p class="stock-note">{% if product.stock > 0 %}{{ product.stock }} available{% else %}Currently out of stock{% endif %}</p>
+    <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post"><button class="button button-dark full-width" {% if product.stock < 1 %}disabled{% endif %}>Add to bag — ₹{{ '%.0f'|format(product.price) }}</button></form>
+    <div class="detail-points"><p>✓ Easy everyday styling</p><p>✓ Cash on Delivery available</p><p>✓ Demo store for college project</p></div>
+    <a class="text-link" href="{{ url_for('home') }}">← Back to collection</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}URBAN THREADS — Everyday essentials{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">THE EVERYDAY EDIT · NEW SEASON</p>
+    <h1>Less, but<br><em>better.</em></h1>
+    <p class="hero-description">Considered essentials for your everyday uniform. Clean silhouettes, easy comfort, no unnecessary noise.</p>
+    <a class="button button-dark" href="#shop">Explore collection <span>↗</span></a>
+  </div>
+  <div class="hero-image" role="img" aria-label="Minimal fashion editorial">
+    <div class="hero-image-caption"><span>01 / 06</span><span>THE DAILY UNIFORM</span></div>
+  </div>
+</section>
+<section class="trust-strip">
+  <span>DESIGNED FOR EVERYDAY</span><span>TIMELESS FITS</span><span>COMFORT FIRST</span><span>COD AVAILABLE</span>
+</section>
+<section class="shop-section" id="shop">
+  <div class="section-heading">
+    <div><p class="eyebrow">OUR COLLECTION</p><h2>Find your fit.</h2></div>
+    <span class="muted">{{ products|length }} pieces</span>
+  </div>
+  <form class="filters" action="{{ url_for('home') }}" method="get">
+    <input type="search" name="q" placeholder="Search pieces..." value="{{ q }}" aria-label="Search products">
+    <select name="category" aria-label="Filter by category">
+      <option value="">All categories</option>
+      {% for cat in categories %}<option value="{{ cat.category }}" {% if selected_category == cat.category %}selected{% endif %}>{{ cat.category }}</option>{% endfor %}
+    </select>
+    <button class="button button-outline" type="submit">Filter</button>
+    {% if q or selected_category %}<a class="text-link" href="{{ url_for('home') }}">Clear</a>{% endif %}
+  </form>
+  <div class="product-grid">
+    {% for product in products %}
+    <article class="product-card">
+      <a class="product-image" href="{{ url_for('product_detail', product_id=product.id) }}">
+        <img src="{{ product.image_url or 'https://placehold.co/600x750?text=URBAN+THREADS' }}" alt="{{ product.name }}" loading="lazy">
+        {% if product.stock < 1 %}<span class="image-tag">Sold out</span>{% else %}<span class="image-tag">Everyday edit</span>{% endif %}
+      </a>
+      <div class="product-info">
+        <div><p class="product-category">{{ product.category }}</p><a class="product-name" href="{{ url_for('product_detail', product_id=product.id) }}">{{ product.name }}</a></div>
+        <strong>₹{{ '%.0f'|format(product.price) }}</strong>
+      </div>
+      <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+        <button class="add-button" type="submit" {% if product.stock < 1 %}disabled{% endif %}>{% if product.stock < 1 %}Out of stock{% else %}+ Add to bag{% endif %}</button>
+      </form>
+    </article>
+    {% else %}
+      <div class="empty-state"><h3>No pieces found</h3><p>Try a different search or category.</p><a class="text-link" href="{{ url_for('home') }}">View all products</a></div>
+    {% endfor %}
+  </div>
+</section>
+<section class="closing-banner"><p class="eyebrow">GOOD CLOTHES. LESS FUSS.</p><h2>Your everyday,<br><em>reimagined.</em></h2><a class="button button-light" href="#shop">Shop the collection</a></section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Your bag — URBAN THREADS{% endblock %}
+{% block content %}
+<section class="page-shell"><p class="eyebrow">YOUR SELECTION</p><h1 class="page-title">Shopping bag<span>.</span></h1>
+{% if items %}
+<form method="post" action="{{ url_for('update_cart') }}"><div class="cart-layout"><div class="cart-items">
+{% for item in items %}<article class="cart-item"><img src="{{ item.product.image_url }}" alt="{{ item.product.name }}"><div class="cart-item-copy"><p class="product-category">{{ item.product.category }}</p><h3>{{ item.product.name }}</h3><p>₹{{ '%.0f'|format(item.product.price) }}</p><label class="quantity-label">Qty <input type="number" name="quantity_{{ item.product.id }}" min="0" max="{{ item.product.stock }}" value="{{ item.quantity }}"></label></div><strong>₹{{ '%.0f'|format(item.subtotal) }}</strong></article>{% endfor %}
+<button class="button button-outline" type="submit">Update bag</button></div>
+<aside class="summary-card"><h2>Order summary</h2><div class="summary-line"><span>Subtotal</span><strong>₹{{ '%.0f'|format(total) }}</strong></div><div class="summary-line"><span>Delivery</span><span>Free</span></div><div class="summary-line total-line"><span>Total</span><strong>₹{{ '%.0f'|format(total) }}</strong></div><a class="button button-dark full-width" href="{{ url_for('checkout') }}">Continue to checkout</a><p class="muted small">Payment method: Cash on Delivery</p></aside></div></form>
+{% else %}<div class="empty-state"><h2>Your bag is taking a break.</h2><p>Looks like you haven't added anything yet.</p><a class="button button-dark" href="{{ url_for('home') }}">Explore collection</a></div>{% endif %}
+</section>
+{% endblock %}

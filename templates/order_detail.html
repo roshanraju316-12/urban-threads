@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }} — URBAN THREADS{% endblock %}
+{% block content %}
+<section class="page-shell narrow-shell"><p class="eyebrow">ORDER CONFIRMATION</p><h1 class="page-title">Thank you<span>.</span></h1><p class="lead">Order #{{ order.id }} has been placed.</p><div class="summary-card"><div class="summary-line"><span>Status</span><span class="status-pill">{{ order.status }}</span></div><div class="summary-line"><span>Placed</span><span>{{ order.created_at }}</span></div><div class="summary-line"><span>Payment</span><span>Cash on Delivery</span></div><hr>{% for item in items %}<div class="summary-line"><span>{{ item.product_name }} × {{ item.quantity }}</span><strong>₹{{ '%.0f'|format(item.price * item.quantity) }}</strong></div>{% endfor %}<div class="summary-line total-line"><span>Total</span><strong>₹{{ '%.0f'|format(order.total) }}</strong></div><h3>Delivery details</h3><p>{{ order.customer_name }}<br>{{ order.phone }}<br>{{ order.address }}</p><a class="button button-dark full-width" href="{{ url_for('orders') }}">View my orders</a></div></section>
+{% endblock %}

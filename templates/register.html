@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Create account — URBAN THREADS{% endblock %}
+{% block content %}
+<section class="auth-page"><div class="auth-intro"><p class="eyebrow">JOIN THE EVERYDAY EDIT</p><h1>Good to have<br><em>you here.</em></h1><p>Create an account to save your orders and shop the collection.</p></div>
+<form class="form-card" method="post"><h2>Create account</h2><label>Full name<input type="text" name="name" required maxlength="80" autocomplete="name"></label><label>Email address<input type="email" name="email" required autocomplete="email"></label><label>Password <span class="muted">(6+ characters)</span><input type="password" name="password" required minlength="6" autocomplete="new-password"></label><button class="button button-dark full-width">Create account</button><p class="form-foot">Already registered? <a href="{{ url_for('login') }}">Log in</a></p></form></section>
+{% endblock %}

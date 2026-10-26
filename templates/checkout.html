@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Checkout — URBAN THREADS{% endblock %}
+{% block content %}
+<section class="page-shell"><p class="eyebrow">ALMOST YOURS</p><h1 class="page-title">Checkout<span>.</span></h1>
+<form method="post" class="checkout-layout"><div class="form-card checkout-form"><h2>Delivery details</h2><label>Full name<input name="customer_name" required maxlength="100" value="{{ session.get('name','') }}"></label><label>Phone number<input name="phone" type="tel" required maxlength="30" placeholder="Your contact number"></label><label>Delivery address<textarea name="address" required rows="4" maxlength="500" placeholder="House no., street, city, PIN code"></textarea></label><div class="payment-option"><span class="radio-dot"></span><div><strong>Cash on Delivery</strong><p class="muted small">Pay when your order arrives. Demo checkout only.</p></div></div><button class="button button-dark full-width">Place order · ₹{{ '%.0f'|format(total) }}</button></div>
+<aside class="summary-card"><h2>Your order</h2>{% for item in items %}<div class="mini-order"><img src="{{ item.product.image_url }}" alt=""><div><strong>{{ item.product.name }}</strong><p class="muted small">Qty {{ item.quantity }}</p></div><span>₹{{ '%.0f'|format(item.subtotal) }}</span></div>{% endfor %}<div class="summary-line total-line"><span>Total</span><strong>₹{{ '%.0f'|format(total) }}</strong></div></aside></form></section>
+{% endblock %}

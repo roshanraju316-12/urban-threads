@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}My orders — URBAN THREADS{% endblock %}
+{% block content %}
+<section class="page-shell"><p class="eyebrow">YOUR ACCOUNT</p><h1 class="page-title">My orders<span>.</span></h1>
+{% if orders %}<div class="table-wrap"><table><thead><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody>{% for order in orders %}<tr><td>#{{ order.id }}</td><td>{{ order.created_at }}</td><td>₹{{ '%.0f'|format(order.total) }}</td><td><span class="status-pill">{{ order.status }}</span></td><td><a class="text-link" href="{{ url_for('order_detail', order_id=order.id) }}">View</a></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><h2>No orders yet.</h2><p>Your next favourite could be one click away.</p><a class="button button-dark" href="{{ url_for('home') }}">Shop now</a></div>{% endif %}
+</section>
+{% endblock %}
